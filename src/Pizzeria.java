@@ -176,8 +176,6 @@ public class Pizzeria {
     // Main method to test the class
     public static void main(String[] args) {
         Pizzeria sliceOHeaven = new Pizzeria("Slice-o-Heaven", "123 Pizza St", "contact@sliceoheaven.com", "123-456-7890", "DEF-SOH-098");
-    
-
         sliceOHeaven.makePizza();
         sliceOHeaven.printReceipt();
     }
