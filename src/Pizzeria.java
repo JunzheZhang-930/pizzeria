@@ -206,6 +206,6 @@ public void specialOfTheDay(String pizzaOfTheDay, String sideOfTheDay, String sp
     System.out.println("Pizza: " + pizzaOfTheDay);
     System.out.println("Side: " + sideOfTheDay);
     System.out.println("Special Price: " + specialPrice);
-}
+} 
 
 }
