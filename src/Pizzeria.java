@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.util.Scanner;
 public class Pizzeria {
     // Variables
     private String storeName;
@@ -24,9 +26,9 @@ public class Pizzeria {
         this.sides = new String[] {"Garlic Bread", "Chicken Wings"};
         this.drinks = new String[] {"Coke", "Pepsi"};
     }
-    
+
     // Getter and Setter methods
-    public String getStoreName() {
+    /*public String getStoreName() {
         return storeName;
     }
 
@@ -104,7 +106,8 @@ public class Pizzeria {
 
     public void setOrderID(String orderID) {
         this.orderID = orderID;
-    }
+    }*/
+
     // Constructor
     public Pizzeria(String storeName, String storeAddress, String storeEmail, String storePhone, String orderID) {
         this.storeAddress = storeAddress;
@@ -139,6 +142,73 @@ public class Pizzeria {
         //System.out.println("Order taken. Order ID: " + orderID);
     }
 
+    // New method to take order
+    public void takeOrder() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Enter three ingredients for your pizza (use spaces to separate ingredients):");
+        String ing1 = input.next();
+        String ing2 = input.next();
+        String ing3 = input.next();
+            
+        System.out.println("Enter size of pizza (Small, Medium, Large):");
+        String pizzaSize = input.next();
+            
+        System.out.println("Do you want extra cheese? (Y/N):");
+        String extraCheese = input.next();
+            
+        System.out.println("Enter one side dish (Calzone, Garlic bread, None):");
+        String sideDish = input.next();
+            
+        System.out.println("Enter drinks(Cold Coffee, Cocoa drink, Coke, None):");
+        String drinks = input.next();
+            
+        System.out.println("Would you like the chance to pay only half for your order? (Y/N):");
+        String whatDiscount = input.next();
+
+        System.out.println("Ingredients: " + ing1 + ", " + ing2 + ", " + ing3 + ",Size: " + pizzaSize + ",Extra Cheese: " + extraCheese + ",Side Dish: " + sideDish + ",Drinks: " + drinks + ",Discount: " + whatDiscount);
+        input.close();
+    }
+
+    // New method to determine whether to give discount or not
+    public void isItYourBirthday(String whatDiscount) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("What is your birthday? (MM/DD)(use spaces to separate Month dand Day)");
+        String birthdayMonth = input.next();
+        String birthdayDay = input.next();
+        LocalDate today = LocalDate.now();
+        String birthdayDate = birthdayMonth + "/" + birthdayDay;
+        String todayDate = today.toString();
+        String todayMonth = todayDate.substring(6, 7);
+        String todayDay = todayDate.substring(9, 10);
+        String todayDateWithoutYear = todayMonth + "/" + todayDay;
+        input.close();
+
+        if (whatDiscount.equals("Y")|| whatDiscount.equals("y")) {
+            if (birthdayDate.equals(todayDateWithoutYear)) {
+            System.out.println("Congratulations! You pay only half the price for your order.");
+            }
+            else {
+            System.out.println("Too bad! You do not meet the conditions to get our 50% discount");
+            }
+        }
+        else {
+            makeCardPayment();
+        }
+    }
+    //New menthod to make card payment
+    public void makeCardPayment() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter card number:");
+        Long cardNumber = input.nextLong();
+        System.out.println("Enter expiry date:(MM/YY)(use spaces to separate Month and Year)");
+        String expiryDate = input.nextLine();
+        System.out.println("Enter CVV:(only 3 digits long)");
+        int cvv = input.nextInt();
+        processCardPayment(cardNumber, expiryDate, cvv);
+        input.close();
+    }
+
     public void makePizza() {
         // Implementation for making a pizza
         this.pizzaIngredients = new String[] {DEF_PIZZA_INGREDIENTS};
@@ -171,8 +241,9 @@ public class Pizzeria {
     }
 
    // New method to process card payment
-   public void processCardPayment(String cardNumber, String expiryDate, int cvv) {
-    int cardLength = cardNumber.length();
+   public void processCardPayment(Long cardNumber, String expiryDate, int cvv) {
+    String cardNumberStrl = Long.toString(cardNumber);
+    int cardLength = cardNumberStrl.length();
     if (cardLength == 14) {
         System.out.println("Card accepted");
     } else {
@@ -181,17 +252,17 @@ public class Pizzeria {
         return;
     }
 
-    int firstCardDigit = Integer.parseInt(cardNumber.substring(0, 1));
-    String blacklistedNumber = "12345678901234";
+    int firstCardDigit = Integer.parseInt(cardNumberStrl.substring(0, 1));
+    Long blacklistedNumber = 12345678901234L;
     System.out.println("First card digits:" + firstCardDigit);
     if (cardNumber.equals(blacklistedNumber)) {
         System.out.println("Card is blacklisted. Please use another card");
         return;
     }
 
-    int lastFourDigits = Integer.parseInt(cardNumber.substring(cardLength - 4));
+    int lastFourDigits = Integer.parseInt(cardNumberStrl.substring(cardLength - 4));
     System.out.println("Last four digits: " + lastFourDigits);
-    StringBuilder cardNumberToDisplay = new StringBuilder(cardNumber);
+    StringBuilder cardNumberToDisplay = new StringBuilder(cardNumberStrl);
     for (int i = 1; i < cardLength - 4; i++) {
         cardNumberToDisplay.setCharAt(i, '*');
     }
