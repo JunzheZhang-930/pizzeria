@@ -15,18 +15,6 @@ public class Main{
         System.out.println("\nTesting takeOrder method:");
         pizzeria.takeOrder();
         
-        //Testing determine whether to give discount or not method
-        System.out.println("\nTesting determine whether to give discount or not method:");
-        pizzeria.isItYourBirthday("");
-        
-        //Testing menthod to make card payment
-        System.out.println("\nTesting menthod to make card payment:");
-        pizzeria.makeCardPayment();
-
-        // Test processCardPayment method
-        System.out.println("\nTesting processCardPayment method:");
-        sliceOHeaven.processCardPayment(1234567890123456L, "12/23", 123);
-    
         // Test specialOfTheDay method
         System.out.println("\nTesting specialOfTheDay method:");
         pizzeria.specialOfTheDay("Margherita", "Garlic Bread", "$9.99");
